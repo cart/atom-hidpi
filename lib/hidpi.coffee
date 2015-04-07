@@ -17,7 +17,7 @@ class Hidpi
     startupDelay:
       title: 'Startup Delay'
       type: 'integer'
-      default: 1000
+      default: 200
 
   constructor: ->
       setTimeout(@update.bind(@), atom.config.get 'hidpi.startupDelay')

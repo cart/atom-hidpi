@@ -7,15 +7,15 @@
     "retina",
     "resolution"
   ],
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Scales Atom's interface based on the current monitor's resolution",
-  "homepage": "https://github.com/mcanders/atom_hidpi",
+  "homepage": "https://github.com/mcanders/atom-hidpi",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mcanders/atom_hidpi"
+    "url": "https://github.com/mcanders/atom-hidpi"
   },
   "bugs": {
-    "url": "https://github.com/mcanders/atom_hidpi"
+    "url": "https://github.com/mcanders/atom-hidpi/issues"
   },
   "license": "MIT",
   "engines": {
