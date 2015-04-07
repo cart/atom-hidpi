@@ -16,3 +16,8 @@ By default Atom's interface will be scaled up 2x when it starts up if the curren
 ## Known Issues
 
 * If a file is open when the interface is scaled, the cursor will be visually shifted but its actual position will remain the same.  Enable "Reopen Current File" to fix this.
+
+## Future Work
+
+* Automatically detect a change in resolution and scale the interface
+* Find out if Atom has a "On Ready" callback to remove the need for the "Startup Delay" option
