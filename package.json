@@ -1,0 +1,26 @@
+{
+  "name": "hidpi",
+  "main": "./lib/hidpi",
+  "author": "Michael Anderson <mcanders1@gmail.com> (https://github.com/mcanders)",
+  "keywords": [
+      "hidpi",
+      "retina",
+      "resolution"
+  ],
+  "version": "0.0.1",
+  "description": "Scales Atom's interface based on the current monitor's resolution",
+  "homepage": "https://github.com/mcanders/atom_hidpi",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/mcanders/atom_hidpi"
+  },
+  "bugs": {
+      "url": "https://github.com/mcanders/atom_hidpi"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">=0.174.0 <2.0.0"
+  },
+  "dependencies": {
+  }
+}
