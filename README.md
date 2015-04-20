@@ -6,6 +6,8 @@ Atom Hidpi scales Atom's interface based on the current monitor's resolution.  C
 
 By default Atom's interface will be scaled up 2x when it starts up if the current monitor's width is above 2300px.  If you move Atom to a different monitor, you can update based on the new resolution by opening the command pallet and calling the "HiDPI: Update" function.
 
+DPI cannot be determined by resolution alone.  A 5 inch phone and a 27 inch monitor with similar resolutions will have vastly different DPIs.  Because of this, this package's default behavior will not be desirable on multi-monitor setups where the monitors' DPIs vary significantly.  Use the "Manual Resolution Scale Factors" setting to assign the appropriate scale factor to your monitors.
+
 ## Configuration
 
 * "Scale Factor": The amount to scale the interface when the current monitor's width is above "Cutoff Width" (Default: 2.0)
