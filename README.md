@@ -10,8 +10,11 @@ By default Atom's interface will be scaled up 2x when it starts up if the curren
 
 * "Scale Factor": The amount to scale the interface when the current monitor's width is above "Cutoff Width" (Default: 2.0)
 * "Cutoff Width": Any monitor with a width (in pixels) higher than "Cutoff Width" will be scaled by "Scale Factor" (Default: 2300)
+* "Cutoff Height": Any monitor with a height (in pixels) higher than "Cutoff Height" will be scaled by "Scale Factor" (Default: 2300)
 * "Reopen Current File": If true, will reopen the current file.  You will be prompted to save any unsaved changes (Default: true)
 * "Startup Delay": The amount of time (in milliseconds) to wait before scaling the interface on startup.  If this is set too low the interface will not scale (Default: 200)
+* "Manual Resolution Scale Factors": A comma separated list of resolutions and scale factor assignments.  This will override the default "Cutoff Width" and "Cutoff Height" behavior. Should be in the format: "1920x1080": 1.5, "2880x1800": 2.5 (Default: '')
+* "Update On Resize": If true the scale factor will be updated when the window is resized (Default: true)
 
 ## Known Issues
 
@@ -19,5 +22,4 @@ By default Atom's interface will be scaled up 2x when it starts up if the curren
 
 ## Future Work
 
-* Automatically detect a change in resolution and scale the interface
 * Find out if Atom has a "On Ready" callback to remove the need for the "Startup Delay" option
