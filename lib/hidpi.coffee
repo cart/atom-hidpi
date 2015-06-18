@@ -1,6 +1,8 @@
 {CompositeDisposable} = require 'atom'
+WebFrame = require 'web-frame'
 class Hidpi
   subscriptions: null
+  currentScaleFactor: 1.0
   config:
     scaleFactor:
       title: 'Scale Factor'
@@ -21,7 +23,7 @@ class Hidpi
     reopenCurrentFile:
       title: 'Reopen Current File'
       type: 'boolean'
-      default: true
+      default: false
     startupDelay:
       title: 'Startup Delay'
       type: 'integer'
@@ -48,18 +50,22 @@ class Hidpi
 
   # Scale the interface when the current monitor's width is above "Cutoff Width"
   update: ->
-    manual_resolutions = JSON.parse('{'+(atom.config.get 'hidpi.manualResolutionScaleFactors')+'}')
-    manual_resolution = manual_resolutions[''+screen.width+'x'+screen.height]
-    if manual_resolution
-      require('web-frame').setZoomFactor(manual_resolution)
+    manualResolutions = JSON.parse('{'+(atom.config.get 'hidpi.manualResolutionScaleFactors')+'}')
+    manualResolutionScaleFactor = manualResolutions[''+screen.width+'x'+screen.height]
+    previousScaleFactor = @currentScaleFactor
+    if manualResolutionScaleFactor
+      @scale(manualResolutionScaleFactor)
     else if (screen.width > atom.config.get 'hidpi.cutoffWidth') or (screen.height > atom.config.get 'hidpi.cutoffHeight')
-      require('web-frame').setZoomFactor(atom.config.get 'hidpi.scaleFactor')
+      @scale(atom.config.get 'hidpi.scaleFactor')
     else
-      require('web-frame').setZoomFactor(1)
+      @scale(1)
 
-    # console.log screen.width
-    @reopenCurrent() if atom.config.get 'hidpi.reopenCurrentFile'
+    if previousScaleFactor != @currentScaleFactor
+      @reopenCurrent() if atom.config.get 'hidpi.reopenCurrentFile'
 
+  scale: (factor) ->
+    WebFrame.setZoomFactor(factor)
+    @currentScaleFactor = factor
   # Reopen the current file if it exists
   reopenCurrent: ->
     @activeEditor = atom.workspace.getActiveTextEditor()
