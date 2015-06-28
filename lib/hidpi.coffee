@@ -50,7 +50,7 @@ class Hidpi
 
   # Scale the interface when the current monitor's width is above "Cutoff Width"
   update: ->
-    manualResolutions = JSON.parse('{'+(atom.config.get 'hidpi.manualResolutionScaleFactors')+'}')
+    manualResolutions = @parseResolutions(atom.config.get 'hidpi.manualResolutionScaleFactors')
     manualResolutionScaleFactor = manualResolutions[''+screen.width+'x'+screen.height]
     previousScaleFactor = @currentScaleFactor
     if manualResolutionScaleFactor
@@ -62,6 +62,16 @@ class Hidpi
 
     if previousScaleFactor != @currentScaleFactor
       @reopenCurrent() if atom.config.get 'hidpi.reopenCurrentFile'
+
+  parseResolutions: (resolutionString) ->
+    resolutionRegex = /"?(\d*x\d*)"?:\s*(\d+\.?\d*)/g
+    matches = {}
+    match = resolutionRegex.exec(resolutionString)
+    while match
+      if match
+        matches[match[1]] = parseFloat(match[2])
+      match = resolutionRegex.exec(resolutionString)
+    return matches
 
   scale: (factor) ->
     WebFrame.setZoomFactor(factor)
