@@ -10,7 +10,8 @@ DPI cannot be determined by resolution alone.  A 5 inch phone and a 27 inch moni
 
 ## Configuration
 
-* "Scale Factor": The amount to scale the interface when the current monitor's width is above "Cutoff Width" (Default: 2.0)
+* "Default Scale Factor": The amount to scale the interface when the current monitor's width is below "Cutoff Width" or its height is below "Cutoff Height" (Default: 1.0)
+* "Hidpi Scale Factor": The amount to scale the interface when the current monitor's width is greater than or equal to "Cutoff Width" or its height is greater than or equal to "Cutoff Height" (Default: 2.0)
 * "Cutoff Width": Any monitor with a width (in pixels) higher than "Cutoff Width" will be scaled by "Scale Factor" (Default: 2300)
 * "Cutoff Height": Any monitor with a height (in pixels) higher than "Cutoff Height" will be scaled by "Scale Factor" (Default: 2300)
 * "Reopen Current File": If true, will reopen the current file.  You will be prompted to save any unsaved changes (Default: true)

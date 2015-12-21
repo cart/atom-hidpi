@@ -5,9 +5,13 @@ class Hidpi
   currentScaleFactor: 1.0
   config:
     scaleFactor:
-      title: 'Scale Factor'
+      title: 'Hidpi Scale Factor'
       type: 'number'
       default: 2.0
+    defaultScaleFactor:
+      title: 'Default Scale Factor'
+      type: 'number'
+      default: 1.0
     cutoffWidth:
       title: 'Cutoff Width'
       type: 'integer'
@@ -32,13 +36,17 @@ class Hidpi
       title: 'Manual Resolution Scale Factors'
       type: 'string',
       default: ''
+    osScaleFactor:
+      title: 'Operating System Scale Factor'
+      type: 'number',
+      default: 1.0
 
   constructor: ->
-      setTimeout(@update.bind(@), atom.config.get 'hidpi.startupDelay')
+      setTimeout(@update.bind(@), @config.startupDelay)
   activate: (state) ->
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace', 'hidpi:update': => @update()
-    if atom.config.get 'hidpi.updateOnResize'
+    if @config.updateOnResize
       that = this
       window.onresize = (e) ->
         that.update()
@@ -51,17 +59,28 @@ class Hidpi
   # Scale the interface when the current monitor's width is above "Cutoff Width"
   update: ->
     manualResolutions = @parseResolutions(atom.config.get 'hidpi.manualResolutionScaleFactors')
-    manualResolutionScaleFactor = manualResolutions[''+screen.width+'x'+screen.height]
+    osScaleFactor = atom.config.get 'hidpi.osScaleFactor'
+    cutoffWidth = atom.config.get 'hidpi.cutoffWidth'
+    cutoffHeight = atom.config.get 'hidpi.cutoffHeight'
+    scaleFactor = atom.config.get 'hidpi.scaleFactor'
+    defaultScaleFactor = atom.config.get 'hidpi.defaultScaleFactor'
+    reopenCurrentFile = atom.config.get 'hidpi.reopenCurrentFile'
+
+    adjustedScreenWidth = screen.width * osScaleFactor
+    adjustedScreenHeight = screen.height * osScaleFactor
+    manualResolutionScaleFactor = manualResolutions[''+adjustedScreenWidth+'x'+adjustedScreenHeight]
     previousScaleFactor = @currentScaleFactor
+    console.log(''+adjustedScreenWidth+'x'+adjustedScreenHeight)
+    console.log(manualResolutions)
     if manualResolutionScaleFactor
       @scale(manualResolutionScaleFactor)
-    else if (screen.width > atom.config.get 'hidpi.cutoffWidth') or (screen.height > atom.config.get 'hidpi.cutoffHeight')
-      @scale(atom.config.get 'hidpi.scaleFactor')
+    else if (adjustedScreenWidth > cutoffWidth) or (adjustedScreenHeight > cutoffHeight)
+      @scale(scaleFactor)
     else
-      @scale(1)
+      @scale(defaultScaleFactor)
 
     if previousScaleFactor != @currentScaleFactor
-      @reopenCurrent() if atom.config.get 'hidpi.reopenCurrentFile'
+      @reopenCurrent() if reopenCurrentFile
 
   parseResolutions: (resolutionString) ->
     resolutionRegex = /"?(\d*x\d*)"?:\s*(\d+\.?\d*)/g
@@ -74,7 +93,7 @@ class Hidpi
     return matches
 
   scale: (factor) ->
-    WebFrame.setZoomFactor(factor)
+    WebFrame.setZoomFactor(factor / atom.config.get 'hidpi.osScaleFactor')
     @currentScaleFactor = factor
   # Reopen the current file if it exists
   reopenCurrent: ->
