@@ -1,5 +1,5 @@
 {CompositeDisposable} = require 'atom'
-WebFrame = require 'web-frame'
+WebFrame = require('electron').webFrame
 class Hidpi
   subscriptions: null
   currentScaleFactor: 1.0
