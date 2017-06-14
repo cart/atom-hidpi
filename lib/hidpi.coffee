@@ -53,9 +53,6 @@ class Hidpi
   deactivate: ->
     @subscriptions.dispose()
 
-  serialize: ->
-    hidpiViewState: @hidpiView.serialize()
-
   # Scale the interface when the current monitor's width is above "Cutoff Width"
   update: ->
     manualResolutions = @parseResolutions(atom.config.get 'hidpi.manualResolutionScaleFactors')
